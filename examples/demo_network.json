@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {"id": "A"}, {"id": "B"}, {"id": "C"}, {"id": "D"}
+  ],
+  "edges": [
+    {"u":"A","v":"B","length_m":80,"slope_pct":2,"curb_cm":0,"width_m":1.6,"surface_score":0.95,"shade_fraction":0.05,"crossing_risk":0.15},
+    {"u":"B","v":"D","length_m":70,"slope_pct":2,"curb_cm":6,"width_m":1.5,"surface_score":0.95,"shade_fraction":0.05,"crossing_risk":0.10},
+    {"u":"A","v":"C","length_m":95,"slope_pct":3,"curb_cm":0,"width_m":1.4,"surface_score":0.90,"shade_fraction":0.85,"crossing_risk":0.05},
+    {"u":"C","v":"D","length_m":95,"slope_pct":3,"curb_cm":0,"width_m":1.4,"surface_score":0.90,"shade_fraction":0.80,"crossing_risk":0.05}
+  ]
+}
