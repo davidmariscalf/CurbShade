@@ -70,6 +70,24 @@ def _number(edge: Mapping[str, Any], key: str) -> float | None:
     return x if math.isfinite(x) else None
 
 
+def _access_number(edge: Mapping[str, Any], key: str) -> float | None:
+    value = _number(edge, key)
+    if value is None:
+        return None
+    if key == "curb_cm" and value < 0:
+        return None
+    if key == "width_m" and value <= 0:
+        return None
+    if key == "surface_score" and not 0.0 <= value <= 1.0:
+        return None
+    return value
+
+
+def _unit_interval(edge: Mapping[str, Any], key: str) -> float | None:
+    value = _number(edge, key)
+    return value if value is not None and 0.0 <= value <= 1.0 else None
+
+
 def evaluate_edge(
     edge: Mapping[str, Any],
     profile: RoutingProfile,
@@ -96,25 +114,23 @@ def evaluate_edge(
     for key, limit, predicate, label in checks:
         if limit is None:
             continue
-        value = _number(edge, key)
+        value = _access_number(edge, key)
         if value is not None and not predicate(value, limit):
             return EdgeEvaluation(False, math.inf, length, length, 0.0, f"{label} barrier")
 
-    unknown = sum(_number(edge, key) is None for key in CRITICAL_ACCESS_FIELDS)
+    unknown = sum(_access_number(edge, key) is None for key in CRITICAL_ACCESS_FIELDS)
     uncertainty = unknown / len(CRITICAL_ACCESS_FIELDS)
 
-    shade = _number(edge, "shade_fraction")
+    shade = _unit_interval(edge, "shade_fraction")
     if shade is None:
         shade = 0.0
         uncertainty = min(1.0, uncertainty + 0.15)
-    shade = min(1.0, max(0.0, shade))
     exposed = length * (1.0 - shade)
 
-    crossing = _number(edge, "crossing_risk")
+    crossing = _unit_interval(edge, "crossing_risk")
     if crossing is None:
         crossing = 0.0
         uncertainty = min(1.0, uncertainty + 0.10)
-    crossing = min(1.0, max(0.0, crossing))
 
     cost = (
         profile.distance_weight * length
