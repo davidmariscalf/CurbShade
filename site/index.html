@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="CurbShade — uncertainty-aware accessible and heat-conscious pedestrian routing.">
+  <title>CurbShade</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="CurbShade home">
+      <span class="brand-mark">CS</span>
+      <span>CurbShade</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#demo">Demo</a>
+      <a href="#how">How it works</a>
+      <a href="https://github.com/davidmariscalf/CurbShade">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Accessible routing with uncertainty built in</p>
+        <h1>Routes that are not only short, but actually traversable.</h1>
+        <p class="lede">
+          CurbShade weighs curb height, slope, width, surface quality, crossing risk,
+          shade and missing data — then finds the best route for the selected profile.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#demo">Try the routing demo</a>
+          <a class="button secondary" href="https://github.com/davidmariscalf/CurbShade">View source</a>
+        </div>
+        <p class="scope">Engineering prototype. Not a certified accessibility or emergency navigation system.</p>
+      </div>
+      <div class="hero-card" aria-label="Product summary">
+        <div><strong>2</strong><span>mobility profiles</span></div>
+        <div><strong>6</strong><span>segment attributes</span></div>
+        <div><strong>1st-class</strong><span>missing-data penalty</span></div>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+      <div class="section-heading">
+        <p class="eyebrow">Interactive demo</p>
+        <h2>See why the “shortest” route is not always the best route.</h2>
+      </div>
+
+      <div class="demo-grid">
+        <form class="controls" id="route-form">
+          <label>
+            Mobility profile
+            <select id="profile">
+              <option value="wheelchair">Wheelchair</option>
+              <option value="walking">Walking</option>
+            </select>
+          </label>
+
+          <label>
+            Heat intensity
+            <span class="range-row">
+              <input id="heat" type="range" min="0" max="1" step="0.05" value="0.6">
+              <output id="heat-value" for="heat">0.60</output>
+            </span>
+          </label>
+
+          <div class="two-col">
+            <label>
+              Start
+              <select id="source"></select>
+            </label>
+            <label>
+              Destination
+              <select id="target"></select>
+            </label>
+          </div>
+
+          <button class="button primary" type="submit">Calculate route</button>
+          <p class="hint">The browser demo mirrors the current Python cost model against the bundled demo network.</p>
+        </form>
+
+        <div class="map-card">
+          <svg id="network" viewBox="0 0 600 360" role="img" aria-label="CurbShade demo network">
+            <g id="edges"></g>
+            <g id="nodes"></g>
+          </svg>
+        </div>
+
+        <aside class="result-card" aria-live="polite">
+          <p class="eyebrow">Selected route</p>
+          <div class="route-path" id="route-path">—</div>
+          <div class="metrics">
+            <div><span>Distance</span><strong id="distance">—</strong></div>
+            <div><span>Exposed</span><strong id="exposed">—</strong></div>
+            <div><span>Uncertainty</span><strong id="uncertainty">—</strong></div>
+            <div><span>Cost</span><strong id="cost">—</strong></div>
+          </div>
+          <p id="route-note" class="route-note"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="how" class="how-section">
+      <div class="section-heading">
+        <p class="eyebrow">Transparent by design</p>
+        <h2>No hidden “AI score.” The route cost is inspectable.</h2>
+      </div>
+      <div class="cards">
+        <article>
+          <h3>Hard barriers</h3>
+          <p>Segments outside the selected mobility profile can be removed from the traversable graph entirely.</p>
+        </article>
+        <article>
+          <h3>Heat exposure</h3>
+          <p>Unshaded distance gets more expensive as the heat preference increases.</p>
+        </article>
+        <article>
+          <h3>Unknown ≠ safe</h3>
+          <p>Missing curb, slope, width or surface data adds uncertainty instead of being treated optimistically.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>CurbShade</span>
+    <span>MIT code · external map data keeps its own licensing</span>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
