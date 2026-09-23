@@ -116,3 +116,10 @@ footer {
   .metrics, .cards, .two-col { grid-template-columns: 1fr; }
   footer { flex-direction: column; }
 }
+
+.support-section { margin:20px 0 90px; padding:28px; border:1px solid var(--line); background:var(--surface); border-radius:24px; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:space-between; gap:28px; }
+.support-section h2 { margin:8px 0 8px; font-size:30px; }
+.support-section p:not(.eyebrow) { margin:0; color:var(--muted); line-height:1.6; }
+.coffee-button { flex:0 0 auto; min-height:48px; padding:0 18px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center; background:#ffdd00; color:#151515; font-weight:900; box-shadow:0 10px 30px rgba(73,61,0,.10); }
+.coffee-button:hover { filter:brightness(.97); transform:translateY(-1px); }
+@media (max-width:700px) { .support-section { flex-direction:column; align-items:flex-start; } .coffee-button { width:100%; } }
