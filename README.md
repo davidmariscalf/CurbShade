@@ -107,3 +107,15 @@ This is an engineering prototype, not a certified accessibility or emergency nav
 ## License
 
 MIT for CurbShade code. External data and dependencies retain their own licenses. OpenStreetMap-derived databases are subject to ODbL requirements.
+
+## Netlify web demo
+
+The repository includes a static interactive demo under `site/`. The browser implementation mirrors the current Python edge-cost model against the bundled demo network, including mobility-profile barriers, heat exposure, crossing risk and uncertainty penalties.
+
+Netlify configuration is committed in `netlify.toml`:
+
+- publish directory: `site`
+- no build command is required
+- static security headers are configured at the edge
+
+To deploy from GitHub, import this repository in Netlify and let Netlify read `netlify.toml`; no additional build settings are required. For a manual drag-and-drop deploy, upload the contents of `site/` (the demo works statically, although repository-level Netlify headers require deploying from the repository config).
